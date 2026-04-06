@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
+import { useForm, ValidationError } from '@formspree/react';
 import { 
   ArrowRight, 
   Bot, 
@@ -539,89 +540,145 @@ const ServicesPage = () => (
   </div>
 );
 
-const ContactPage = () => (
-  <div className="pt-32 px-6 md:px-12 pb-32">
-    <div className="max-w-7xl mx-auto">
-      <header className="mb-20 max-w-2xl">
-        <h1 className="text-6xl font-bold font-headline tracking-tighter mb-6 leading-[1.1]">
-          Start Your Project
-        </h1>
-        <p className="text-gray-400 text-lg leading-relaxed">
-          Have a vision for the future? Our elite team is ready to transform your complex business challenges into sleek, high-momentum digital reality.
-        </p>
-      </header>
+const ContactPage = () => {
+  const [state, handleSubmit] = useForm("meepvnke");
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-        <div className="lg:col-span-7">
-          <div className="glass-card p-10 rounded-xl border-t-2 border-primary-pulse-start/30 shadow-[0_0_40px_rgba(0,122,255,0.1)]">
-            <form className="space-y-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-500 tracking-wider uppercase">Full Name</label>
-                  <input type="text" placeholder="John Doe" className="w-full bg-surface-highest/50 border-none rounded-lg p-4 text-white focus:ring-1 focus:ring-primary-pulse-end/50 placeholder:text-gray-600" />
-                </div>
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-500 tracking-wider uppercase">Email Address</label>
-                  <input type="email" placeholder="john@company.com" className="w-full bg-surface-highest/50 border-none rounded-lg p-4 text-white focus:ring-1 focus:ring-primary-pulse-end/50 placeholder:text-gray-600" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-500 tracking-wider uppercase">Project Type</label>
-                <select className="w-full bg-surface-highest/50 border-none rounded-lg p-4 text-white focus:ring-1 focus:ring-primary-pulse-end/50 appearance-none cursor-pointer">
-                  <option>Strategic Consulting</option>
-                  <option>Digital Infrastructure</option>
-                  <option>Brand Transformation</option>
-                  <option>Market Intelligence</option>
-                </select>
-              </div>
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-500 tracking-wider uppercase">Your Message</label>
-                <textarea rows={5} placeholder="Tell us about your objectives..." className="w-full bg-surface-highest/50 border-none rounded-lg p-4 text-white focus:ring-1 focus:ring-primary-pulse-end/50 placeholder:text-gray-600 resize-none" />
-              </div>
-              <button className="w-full primary-gradient text-black py-5 rounded-lg font-bold text-lg tracking-tight hover:brightness-110 active:scale-[0.98] transition-all flex justify-center items-center gap-3">
-                Initialize Project
-                <ArrowRight size={24} />
-              </button>
-            </form>
+  if (state.succeeded) {
+    return (
+      <div className="pt-32 px-6 md:px-12 pb-32 min-h-[70vh] flex items-center justify-center">
+        <div className="max-w-2xl text-center glass-card p-12 rounded-xl border-t-2 border-primary-pulse-start/30">
+          <div className="bg-primary-pulse-end/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8">
+            <CheckCircle2 size={40} className="text-primary-pulse-end" />
           </div>
+          <h2 className="text-4xl font-headline font-bold mb-4">Project Initialized</h2>
+          <p className="text-gray-400 text-lg mb-8">
+            Thank you for reaching out. Our team has received your transmission and will respond within 24 hours to begin the strategic alignment.
+          </p>
+          <Link to="/" className="inline-flex items-center gap-2 text-primary-pulse-end font-bold hover:underline">
+            Return to Command Center <ArrowRight size={20} />
+          </Link>
         </div>
+      </div>
+    );
+  }
 
-        <div className="lg:col-span-5 space-y-12">
-          <div className="space-y-6">
-            {[
-              { icon: <Mail />, title: "Electronic Mail", val: "connect@deltax.agency", sub: "24/7 Priority Support" },
-              { icon: <Globe />, title: "Global Headquarters", val: "101 Monolith Drive, Tech District", sub: "San Francisco, CA 94105" },
-              { icon: <Phone />, title: "Direct Line", val: "+1 (888) DELTA-X-0", sub: "Mon - Fri, 9am - 6pm EST" }
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-6 p-6 rounded-xl bg-surface-low transition-colors hover:bg-surface-highest border-l-2 border-primary-pulse-end">
-                <div className="bg-primary-pulse-end/10 p-3 rounded-lg text-primary-pulse-end">
-                  {item.icon}
+  return (
+    <div className="pt-32 px-6 md:px-12 pb-32">
+      <div className="max-w-7xl mx-auto">
+        <header className="mb-20 max-w-2xl">
+          <h1 className="text-6xl font-bold font-headline tracking-tighter mb-6 leading-[1.1]">
+            Start Your Project
+          </h1>
+          <p className="text-gray-400 text-lg leading-relaxed">
+            Have a vision for the future? Our elite team is ready to transform your complex business challenges into sleek, high-momentum digital reality.
+          </p>
+        </header>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="lg:col-span-7">
+            <div className="glass-card p-10 rounded-xl border-t-2 border-primary-pulse-start/30 shadow-[0_0_40px_rgba(0,122,255,0.1)]">
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-2">
+                    <label htmlFor="full-name" className="block text-sm font-medium text-gray-500 tracking-wider uppercase">Full Name</label>
+                    <input 
+                      id="full-name"
+                      type="text" 
+                      name="name"
+                      placeholder="John Doe" 
+                      className="w-full bg-surface-highest/50 border-none rounded-lg p-4 text-white focus:ring-1 focus:ring-primary-pulse-end/50 placeholder:text-gray-600" 
+                      required
+                    />
+                    <ValidationError prefix="Name" field="name" errors={state.errors} className="text-red-500 text-xs mt-1" />
+                  </div>
+                  <div className="space-y-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-500 tracking-wider uppercase">Email Address</label>
+                    <input 
+                      id="email"
+                      type="email" 
+                      name="email"
+                      placeholder="john@company.com" 
+                      className="w-full bg-surface-highest/50 border-none rounded-lg p-4 text-white focus:ring-1 focus:ring-primary-pulse-end/50 placeholder:text-gray-600" 
+                      required
+                    />
+                    <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-500 text-xs mt-1" />
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-headline font-bold text-xl mb-1">{item.title}</h3>
-                  <p className="text-gray-300 font-medium">{item.val}</p>
-                  <p className="text-gray-500 text-sm mt-1">{item.sub}</p>
+                <div className="space-y-2">
+                  <label htmlFor="project-type" className="block text-sm font-medium text-gray-500 tracking-wider uppercase">Project Type</label>
+                  <select 
+                    id="project-type"
+                    name="projectType"
+                    className="w-full bg-surface-highest/50 border-none rounded-lg p-4 text-white focus:ring-1 focus:ring-primary-pulse-end/50 appearance-none cursor-pointer"
+                  >
+                    <option>Strategic Consulting</option>
+                    <option>Digital Infrastructure</option>
+                    <option>Brand Transformation</option>
+                    <option>Market Intelligence</option>
+                  </select>
+                  <ValidationError prefix="Project Type" field="projectType" errors={state.errors} className="text-red-500 text-xs mt-1" />
                 </div>
-              </div>
-            ))}
+                <div className="space-y-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-500 tracking-wider uppercase">Your Message</label>
+                  <textarea 
+                    id="message"
+                    name="message"
+                    rows={5} 
+                    placeholder="Tell us about your objectives..." 
+                    className="w-full bg-surface-highest/50 border-none rounded-lg p-4 text-white focus:ring-1 focus:ring-primary-pulse-end/50 placeholder:text-gray-600 resize-none" 
+                    required
+                  />
+                  <ValidationError prefix="Message" field="message" errors={state.errors} className="text-red-500 text-xs mt-1" />
+                </div>
+                <button 
+                  type="submit" 
+                  disabled={state.submitting}
+                  className="w-full primary-gradient text-black py-5 rounded-lg font-bold text-lg tracking-tight hover:brightness-110 active:scale-[0.98] transition-all flex justify-center items-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {state.submitting ? "Initializing..." : "Initialize Project"}
+                  <ArrowRight size={24} />
+                </button>
+              </form>
+            </div>
           </div>
 
-          <div className="relative group">
-            <div className="absolute inset-0 bg-primary-pulse-end/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl blur-xl" />
-            <div className="relative rounded-xl overflow-hidden aspect-video bg-surface-highest border border-white/5">
-              <img src="https://picsum.photos/seed/map/800/450?grayscale" alt="Map" className="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-700" referrerPolicy="no-referrer" />
-              <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 flex items-center gap-3">
-                <div className="w-3 h-3 bg-primary-pulse-end rounded-full animate-pulse" />
-                <span className="text-sm font-bold tracking-widest uppercase font-headline">Live Tracking Active</span>
+          <div className="lg:col-span-5 space-y-12">
+            <div className="space-y-6">
+              {[
+                { icon: <Mail />, title: "Electronic Mail", val: "connect@deltax.agency", sub: "24/7 Priority Support" },
+                { icon: <Globe />, title: "Global Headquarters", val: "101 Monolith Drive, Tech District", sub: "San Francisco, CA 94105" },
+                { icon: <Phone />, title: "Direct Line", val: "+1 (888) DELTA-X-0", sub: "Mon - Fri, 9am - 6pm EST" }
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-6 p-6 rounded-xl bg-surface-low transition-colors hover:bg-surface-highest border-l-2 border-primary-pulse-end">
+                  <div className="bg-primary-pulse-end/10 p-3 rounded-lg text-primary-pulse-end">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <h3 className="font-headline font-bold text-xl mb-1">{item.title}</h3>
+                    <p className="text-gray-300 font-medium">{item.val}</p>
+                    <p className="text-gray-500 text-sm mt-1">{item.sub}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="relative group">
+              <div className="absolute inset-0 bg-primary-pulse-end/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl blur-xl" />
+              <div className="relative rounded-xl overflow-hidden aspect-video bg-surface-highest border border-white/5">
+                <img src="https://picsum.photos/seed/map/800/450?grayscale" alt="Map" className="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-700" referrerPolicy="no-referrer" />
+                <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 flex items-center gap-3">
+                  <div className="w-3 h-3 bg-primary-pulse-end rounded-full animate-pulse" />
+                  <span className="text-sm font-bold tracking-widest uppercase font-headline">Live Tracking Active</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 // --- Main App ---
 
