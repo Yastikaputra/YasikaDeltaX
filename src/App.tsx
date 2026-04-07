@@ -21,6 +21,7 @@ import {
   Layers
 } from 'lucide-react';
 import { cn } from './lib/utils';
+import AdminPage from './pages/AdminPage';
 
 // --- Components ---
 
@@ -693,6 +694,7 @@ export default function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/admin" element={<AdminPage />} />
           </Routes>
         </main>
         <Footer />
